@@ -18,6 +18,8 @@ pipeline {
                 withCredentials([
                     usernamePassword(credentialsId: 'perfexp-credentials-training', usernameVariable: "USER", passwordVariable: "PWD")
                 ]){
+                    echo "${USER}"
+                    echo "${PWD}"
                     sh "docker build --build-arg perfexp_username=${USER} --build-arg perfexp_password=${PWD} . -t image-test" 
                 }
             }
