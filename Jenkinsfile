@@ -2,7 +2,7 @@ pipeline {
     agent {label 'standard-slave'}
     parameters {
         choice(name: 'TEST', choices: ['scalability', 'endurance', 'load', 'stress', 'spike'], description: 'Select a test')
-        string(name: 'URL', defaultValue: '', description: 'Url')
+        string(name: 'HOST', defaultValue: '', description: 'Url')
         string(name: 'PORT', defaultValue: '8080', description: 'Port')
         string(name: 'CONCURRENCY', defaultValue: '0', description: 'Target concurrecy')
         string(name: 'RAMP_UP', defaultValue: '0', description: 'Ramp up time')
@@ -28,7 +28,7 @@ pipeline {
 
         stage('Run container'){
             steps {	
-                echo "${URL}"
+                echo "${HOST}"
                 echo "${TEST}"
                 echo "${PORT}"
                 echo "${CONCURRENCY}"
@@ -36,7 +36,7 @@ pipeline {
                 echo "${STEPS}"
                 echo "${TIME}"
                 echo "${ENDPOINT}"
-                sh "docker run -d image-test python3.7 /usr/perfexp-tutorial/prueba.py ${URL} ${PORT} ${ENDPOINT} ${TEST} ${CONCURRENCY} ${RAMP_UP} ${STEPS} ${TIME}"
+                sh "docker run -d image-test python3.7 /usr/perfexp-tutorial/prueba.py ${HOST} ${PORT} ${ENDPOINT} ${TEST} ${CONCURRENCY} ${RAMP_UP} ${STEPS} ${TIME}"
             }
         }
     } 
