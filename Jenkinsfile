@@ -2,7 +2,7 @@ pipeline {
     agent {label 'standard-slave'}
     parameters {
         choice(name: 'TEST', choices: ['scalability', 'endurance', 'load', 'stress', 'spike'], description: 'Select a test')
-        string(name: 'URL', defaultValue: '', description: 'Url')
+        string(name: 'URL', defaultValue: 'ec2-3-21-207-134.us-east-2.compute.amazonaws.com', description: 'Url')
         string(name: 'PORT', defaultValue: '8080', description: 'Port')
         string(name: 'CONCURRENCY', defaultValue: '0', description: 'Target concurrecy')
         string(name: 'RAMP_UP', defaultValue: '0', description: 'Ramp up time')
