@@ -28,7 +28,7 @@ pipeline {
         stage('Run container'){
             steps {			 
                 sh """
-                        docker run image-test python3.7 ./usr/perfexp-tutorial/prueba.py ${HOST} ${PORT} ${TEST} ${CONCURRENCY} ${RAMP_UP} ${STEPS} ${TIME} ${ENDPOINT}
+                        docker run image-test python3.7 /usr/perfexp-tutorial/prueba.py ${HOST} ${PORT} ${TEST} ${CONCURRENCY} ${RAMP_UP} ${STEPS} ${TIME} ${ENDPOINT}
                     """
                 
             }
