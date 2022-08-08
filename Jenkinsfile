@@ -12,16 +12,17 @@ node {
 
     }
 
-    stage ("Building docker image"){
+    stages{
+        stage ("Building docker image"){
         steps {
             withCredentials([
-                usernamePassword(credentials: 'perfexp-credentials-training', usernameVariable: USER, passwordVariable: PWD)
+                usernamePassword(credentialsId: 'perfexp-credentials-training', usernameVariable: "USER", passwordVariable: "PWD")
             ]){
                 sh "docker build --build-arg perfexp_username=${USER} --build-arg perfexp_password=${PWD} . -t image-test" 
             }
         }
 
-    stage('Run container'){
+        stage('Run container'){
         steps {	
             echo "${URL}"
             echo "${TEST}"
@@ -31,9 +32,10 @@ node {
             echo "${STEPS}"
             echo "${TIME}"
             echo "${ENDPOINT}"
-            sh "docker run -e url=ec2-3-21-207-134.us-east-2.compute.amazonaws.com -e port=8080 -e endpoint=1 -e script=load -e target_concurrency=100 -e ramp_up_time=10 -e ramp_up_steps=10 -e hold_target_rate_time=10 -d image-test"
+            sh "docker run -d image-test python3.7 /usr/perfexp-tutorial/prueba.py ${URL} ${PORT} ${ENDPOINT} ${TEST} ${CONCURRENCY} ${RAMP_UP} ${STEPS} ${TIME}"
         }
     }
-
+    }
+    
     
 }

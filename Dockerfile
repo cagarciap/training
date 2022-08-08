@@ -8,14 +8,14 @@ RUN python3.7 -m pip install --no-cache-dir --upgrade "git+https://performancecu
 
 ARG perfexp_username
 ARG perfexp_password
-ENV url=
-ENV port=
-ENV script=
-ENV endpoint=
-ENV target_concurrency=
-ENV ramp_up_time=
-ENV ramp_up_steps=
-ENV hold_target_rate_time=
+#ENV url=
+#ENV port=
+#ENV script=
+#ENV endpoint=
+#ENV target_concurrency=
+#ENV ramp_up_time=
+#ENV ramp_up_steps=
+#ENV hold_target_rate_time=
 
 
 RUN psl-perfexp configure -url "https://api.performance-explorer.psl.xyz" -usr $perfexp_username -pass $perfexp_password
@@ -55,4 +55,4 @@ RUN /test/jmeter/bin/PluginsManagerCMD.sh install-for-jmx /usr/perfexp-tutorial/
 RUN /test/jmeter/bin/PluginsManagerCMD.sh install-for-jmx /usr/perfexp-tutorial/spike_test.jmx
 RUN /test/jmeter/bin/PluginsManagerCMD.sh install-for-jmx /usr/perfexp-tutorial/endurance_test.jmx
 
-CMD python3.7 /usr/perfexp-tutorial/prueba.py $url $port $endpoint $script $target_concurrency $ramp_up_time $ramp_up_steps $hold_target_rate_time
+CMD 
