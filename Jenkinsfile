@@ -16,7 +16,7 @@ pipeline {
         stage ("Building docker image"){
             steps {
                 withCredentials([
-                    usernamePassword(credentialsId: 'perfexp-credentials-training', usernameVariable: "USER", passwordVariable: "PWD")
+                    usernamePassword(credentialsId: 'perfexp-credentials-training', usernameVariable: "USER", passwordVariable: "PWD"),
                     usernamePassword(credentialsId: 'git-credentials', usernameVariable: "GIT_USER", passwordVariable: "GIT_PASS")
                 ]){
                     echo "User ${USER}"
