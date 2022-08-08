@@ -16,11 +16,12 @@ pipeline {
         stage ("Building docker image"){
             steps {
                 withCredentials([
-                    usernamePassword(credentialsId: 'git-credentials', usernameVariable: "USER", passwordVariable: "PWD")
+                    usernamePassword(credentialsId: 'perfexp-credentials-training', usernameVariable: "USER", passwordVariable: "PWD")
+                    usernamePassword(credentialsId: 'git-credentials', usernameVariable: "GIT_USER", passwordVariable: "GIT_PASS")
                 ]){
                     echo "User ${USER}"
                     echo "Pass ${PWD}"
-                    sh 'docker build --build-arg perfexp_username=$USER --build-arg perfexp_password=$PWD . -t image-test' 
+                    sh "docker build --build-arg git_user=${GIT_USER} --build-arg git_pass=${GIT_PASS} --build-arg perfexp_username=${USER} --build-arg perfexp_password=${PWD} . -t image-test" 
                 }
             }
         }
