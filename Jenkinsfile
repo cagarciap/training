@@ -20,7 +20,7 @@ pipeline {
                 ]){
                     echo "User ${USER}"
                     echo "Pass ${PWD}"
-                    sh "docker build --build-arg perfexp_username=${USER} --build-arg perfexp_password=${PWD} . -t image-test" 
+                    sh 'docker build --build-arg perfexp_username=$USER --build-arg perfexp_password=$PWD . -t image-test' 
                 }
             }
         }
