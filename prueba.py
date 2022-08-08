@@ -8,9 +8,9 @@ def variables():
     parser = argparse.ArgumentParser()
 
     """Global variables"""
-    parser.add_argument('-script', '--script', type=str,required=True, help='Script to run')
-    parser.add_argument('-endpoint', '--endpoint', type=str, required=True, help='Endpoint to test')
-    parser.add_argument('-port', '--port', type=str, required=True, help='Port')
+    parser.add_argument('-script', '--script', type=str, help='Script to run')
+    parser.add_argument('-endpoint', '--endpoint', type=str, help='Endpoint to test')
+    parser.add_argument('-port', '--port', type=str, help='Port')
     parser.add_argument('-url', '--url', type=str, help='Url to test')
 
     """Load and Endurace test variables"""
