@@ -1,4 +1,4 @@
-node {
+pipeline {
     agent {label 'standard-slave'}
     parameters {
         choice(name: 'TEST', choices: ['scalability', 'endurance', 'load', 'stress', 'spike'], description: 'Select a test')
@@ -14,28 +14,27 @@ node {
 
     stages{
         stage ("Building docker image"){
-        steps {
-            withCredentials([
-                usernamePassword(credentialsId: 'perfexp-credentials-training', usernameVariable: "USER", passwordVariable: "PWD")
-            ]){
-                sh "docker build --build-arg perfexp_username=${USER} --build-arg perfexp_password=${PWD} . -t image-test" 
+            steps {
+                withCredentials([
+                    usernamePassword(credentialsId: 'perfexp-credentials-training', usernameVariable: "USER", passwordVariable: "PWD")
+                ]){
+                    sh "docker build --build-arg perfexp_username=${USER} --build-arg perfexp_password=${PWD} . -t image-test" 
+                }
             }
         }
 
         stage('Run container'){
-        steps {	
-            echo "${URL}"
-            echo "${TEST}"
-            echo "${PORT}"
-            echo "${CONCURRENCY}"
-            echo "${RAMP_UP}"
-            echo "${STEPS}"
-            echo "${TIME}"
-            echo "${ENDPOINT}"
-            sh "docker run -d image-test python3.7 /usr/perfexp-tutorial/prueba.py ${URL} ${PORT} ${ENDPOINT} ${TEST} ${CONCURRENCY} ${RAMP_UP} ${STEPS} ${TIME}"
+            steps {	
+                echo "${URL}"
+                echo "${TEST}"
+                echo "${PORT}"
+                echo "${CONCURRENCY}"
+                echo "${RAMP_UP}"
+                echo "${STEPS}"
+                echo "${TIME}"
+                echo "${ENDPOINT}"
+                sh "docker run -d image-test python3.7 /usr/perfexp-tutorial/prueba.py ${URL} ${PORT} ${ENDPOINT} ${TEST} ${CONCURRENCY} ${RAMP_UP} ${STEPS} ${TIME}"
+            }
         }
-    }
-    }
-    
-    
+    } 
 }
