@@ -8,10 +8,10 @@ RUN apt-get update && apt-get install -y python3.7 python3-pip git wget unzip cu
 
 ARG perfexp_username
 ARG perfexp_password
-ARG git_user
-ARG git_pass
+ARG git_usr
+ARG git_pwd
 
-RUN python3.7 -m pip install --no-cache-dir --upgrade git+https://$git_user:$git_pass@github.com/pslcorp/psl-performance-cli@v1.14.0#egg=psl-perfexp
+RUN python3.7 -m pip install --no-cache-dir --upgrade git+https://$git_usr:$git_pwd@github.com/pslcorp/psl-performance-cli@v1.14.0#egg=psl-perfexp
 
 RUN psl-perfexp configure -url "https://api.performance-explorer.psl.xyz" -usr $perfexp_username -pass $perfexp_password
 RUN psl-perfexp login
