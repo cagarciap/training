@@ -3,7 +3,7 @@ pipeline {
     parameters {
         choice(name: 'TEST', choices: ['scalability', 'endurance', 'load', 'stress', 'spike'], description: 'Select a test')
         string(name: 'HOST', defaultValue: '', description: 'Host address')
-        string(name: 'PORT', defaultValue: '8080', description: 'Port')
+        string(name: 'PORT', defaultValue: '8080', description: 'Port number')
         string(name: 'CONCURRENCY', defaultValue: '0', description: 'Target concurrecy')
         string(name: 'RAMP_UP', defaultValue: '0', description: 'Ramp up time')
         string(name: 'STEPS', defaultValue: '0', description: 'Ramp up steps')
@@ -11,33 +11,27 @@ pipeline {
         choice(name: 'ENDPOINT', choices: ['0', '1', '2', '3', '4', '5'], description: 'Select a endpoint')
 
     }
-
-    stages{
+    stages {
         stage ("Building docker image"){
             steps {
                 withCredentials([
-                    usernamePassword(credentialsId: 'perfexp-credentials-training', usernameVariable: "USER", passwordVariable: "PWD"),
-                    usernamePassword(credentialsId: 'git-credentials', usernameVariable: "GIT_USER", passwordVariable: "GIT_PASS")
+                    usernamePassword(credentialsId: "perfexp-credentials-training", usernameVariable: "USER", passwordVariable: "PWD"),
+                    usernamePassword(credentialsId: "git-credentials", usernameVariable: "GIT_USR", passwordVariable: "GIT_PWD"),
+                    
                 ]){
-                    echo "User ${USER}"
-                    echo "Pass ${PWD}"
-                    sh "docker build --build-arg git_user=${GIT_USER} --build-arg git_pass=${GIT_PASS} --build-arg perfexp_username=${USER} --build-arg perfexp_password=${PWD} . -t image-test" 
+                    sh """
+                            docker build --build-arg git_usr=${GIT_USR} --build-arg git_pwd=${GIT_PWD} --build-arg perfexp_username=${USER} --build-arg perfexp_password=${PWD} . -t image-test 
+                        """
                 }
             }
         }
-
         stage('Run container'){
-            steps {	
-                echo "${HOST}"
-                echo "${TEST}"
-                echo "${PORT}"
-                echo "${CONCURRENCY}"
-                echo "${RAMP_UP}"
-                echo "${STEPS}"
-                echo "${TIME}"
-                echo "${ENDPOINT}"
-                sh "docker run image-test python3.7 /usr/perfexp-tutorial/prueba.py ${HOST} ${PORT} ${ENDPOINT} ${TEST} ${CONCURRENCY} ${RAMP_UP} ${STEPS} ${TIME}"
+            steps {			 
+                sh """
+                        docker run image-test python3.7 ./usr/perfexp-tutorial/prueba.py ${HOST} ${PORT} ${TEST} ${BUILD_NUMBER} ${THREADS} ${RAMP_UP} ${STEPS} ${TIME} ${ENDPOINT}
+                    """
+                
             }
         }
-    } 
+    }
 }
