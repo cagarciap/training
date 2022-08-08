@@ -18,7 +18,7 @@ ARG perfexp_password
 #ENV hold_target_rate_time=
 
 
-RUN psl-perfexp configure -url "https://api.performance-explorer.psl.xyz" -usr "training" -pass "PerfTrain2021*"
+RUN psl-perfexp configure -url "https://api.performance-explorer.psl.xyz" -usr $perfexp_username -pass $perfexp_password
 RUN psl-perfexp login
 
 RUN apt-get install -y openjdk-8-jdk && \
