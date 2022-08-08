@@ -1,0 +1,11 @@
+{
+  "scn_project_name": "Cesar Training",
+  "scn_application_name": "Test API",
+  "scn_transaction_name": "Some Transaction",
+  "scn_job_name": "Some Job",
+  "scn_build_number": "1",
+  "scn_version": "v1.0.0",
+  "scn_test_name": "daily",
+  "scn_tag": "scalability-test",
+  "scn_threads": "1"
+}
