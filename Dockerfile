@@ -10,14 +10,6 @@ ARG perfexp_username
 ARG perfexp_password
 ARG git_user
 ARG git_pass
-#ENV url=
-#ENV port=
-#ENV script=
-#ENV endpoint=
-#ENV target_concurrency=
-#ENV ramp_up_time=
-#ENV ramp_up_steps=
-#ENV hold_target_rate_time=
 
 RUN python3.7 -m pip install --no-cache-dir --upgrade git+https://$git_user:$git_pass@github.com/pslcorp/psl-performance-cli@v1.14.0#egg=psl-perfexp
 
