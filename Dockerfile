@@ -1,6 +1,8 @@
 FROM ubuntu:18.04
 
 WORKDIR /test
+RUN mkdir /usr/perfexp-tutorial
+COPY . /usr/perfexp-tutorial 
 
 RUN apt-get update && apt-get install -y python3.7 python3-pip git wget unzip curl
 
